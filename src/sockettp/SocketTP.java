@@ -60,7 +60,7 @@ public class SocketTP {
 
                         Noticia noti = new Noticia(titulo, cuerpo);
 
-                        cliente.CargarNoticia(Noticia);
+                        cliente.CargarNoticia(noti);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
