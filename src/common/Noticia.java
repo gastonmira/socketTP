@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sockettp;
+package common;
+
+import java.io.Serializable;
 
 /**
  *
  * @author juan.dapice
  */
-public class Noticia {
+public class Noticia implements Serializable{
     private String titulo;
     private String cuerpo;
     

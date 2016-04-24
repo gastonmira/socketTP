@@ -5,13 +5,13 @@
  */
 package sockettp;
 
+import common.Request;
+
 /**
  *
  * @author juan.dapice
  */
 public interface iCliente {
  
-    String MostrarTitulos() throws Exception;
-    String MostrarNoticia(String indiceNoticia) throws Exception;
-    String CargarNoticia(Noticia noti) throws Exception;
+    public String Handle(Request req) throws Exception;
 }

@@ -5,11 +5,18 @@
  */
 package sockettp;
 
+import common.Request;
+import common.Noticia;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
+
+//Codigos de operacion para server y cliente: 
+//1 - Mostrar Titulos
+//2 - Mostrar noticia elegida
+//3 - Cargar Noticia
 
 /**
  *
@@ -37,13 +44,15 @@ public class SocketTP {
             switch (answer) {
                 case "1":
                     try {
-                        String titulos = cliente.MostrarTitulos();
-                        System.out.println(titulos);
+                        String titulos = cliente.Handle(new Request(1,null));
+                        System.out.print("Titulos:");
+                        System.out.print("\n"+titulos.replace("$;", "\n"));
                         
                         System.out.println("Elija una noticia y aprete Enter");
                         String indiceNoticia = bufferRead.readLine();
                         
-                        String noticia = cliente.MostrarNoticia(indiceNoticia);
+                        String noticia = cliente.Handle(new Request(2,Integer.parseInt(indiceNoticia)));
+                        System.out.println("Cuerpo Noticia:");
                         System.out.println(noticia);
                         
                     } catch (Exception e) {
@@ -60,7 +69,8 @@ public class SocketTP {
 
                         Noticia noti = new Noticia(titulo, cuerpo);
 
-                        cliente.CargarNoticia(noti);
+                        String respuesta = cliente.Handle(new Request(3,noti));
+                        System.out.println(respuesta);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
