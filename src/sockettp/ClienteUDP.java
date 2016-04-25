@@ -49,7 +49,7 @@ public class ClienteUDP implements iCliente {
             e.printStackTrace();
         }
         
-        return response; 
+        return response.trim(); 
     }
     
 }
