@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
-import org.apache.commons.lang3.StringUtils;
 
 //Codigos de operacion para server y cliente: 
 //1 - Mostrar Titulos
@@ -31,7 +30,7 @@ public class SocketTP {
     public static int PuertoServerUDP = 6007;
     public static String HostnameServerTCP = "localhost";
     public static String HostnameServerUDP = "localhost";
-
+    
     public static void main(String[] args) throws Exception {
         // TODO code application logic here
         boolean quiereSalir = false;
@@ -73,7 +72,7 @@ public class SocketTP {
 
                         System.out.println("Elija una noticia y aprete Enter");
                         String indiceNoticia = bufferRead.readLine();
-                        if (StringUtils.isNumeric(indiceNoticia)) {
+                        if (tryParseInt(indiceNoticia)) {
                             String noticia = cliente.Handle(new Request(2, Integer.parseInt(indiceNoticia)));
                             System.out.println("Cuerpo Noticia:");
                             System.out.println(noticia);
@@ -108,5 +107,14 @@ public class SocketTP {
                     break;
             }
         }
+    }
+    
+    public static boolean tryParseInt(String value) {  
+     try {  
+         Integer.parseInt(value);  
+         return true;  
+      } catch (NumberFormatException e) {  
+         return false;  
+      }  
     }
 }
