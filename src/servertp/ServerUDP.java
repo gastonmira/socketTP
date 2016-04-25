@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package serverUDP;
+package servertp;
 
 import common.Noticia;
 import common.Request;
@@ -38,7 +38,7 @@ public class ServerUDP {
         System.out.println("Servidor Escuchando por puerto " + String.valueOf(port));
         
         while(true) {
-            DatagramPacket incomingPacket = new DatagramPacket(incomingData, port);
+            DatagramPacket incomingPacket = new DatagramPacket(incomingData, incomingData.length);
             serverUDP.receive(incomingPacket);
             byte[] data = incomingPacket.getData();
             ByteArrayInputStream in = new ByteArrayInputStream(data);
@@ -60,25 +60,24 @@ public class ServerUDP {
                         if (req.getPayload() != null) {
                             int id = (Integer)req.getPayload();
                             if (repo.IndexExists(id)) {
-                                System.out.println(repo.GetNoticiaByIndex(id));
                                 reply = repo.GetNoticiaByIndex(id);
                             } else {
-                                System.out.println("Indice invalido");
+                                reply = "Indice invalido";
                             }
                         }else{
-                            System.out.println("Error mostrando noticia");
+                            reply = "Error mostrando noticia";
                         }
                         break;
                     case 3:
                         if (req.getPayload() != null) {
                             repo.AgregarNoticia((Noticia) req.getPayload());
-                            System.out.println("Noticia agregada con exito");
+                            reply = "Noticia agregada con exito";
                         } else {
-                            System.out.println("Error agregando noticia");
+                            reply = "Error agregando noticia";
                         }
                         break;
                     default:
-                        System.out.println("Codigo de operacion invalido");
+                        reply = "Codigo de operacion invalido";
                         break;
                             
                 }

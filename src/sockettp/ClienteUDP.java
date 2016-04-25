@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package clienteUDP;
+package sockettp;
 
 import common.Request;
 import java.io.ByteArrayOutputStream;
@@ -19,10 +19,12 @@ import sockettp.iCliente;
  */
 public class ClienteUDP implements iCliente {
     
-    public int port;
+    private int port;
+    private String hostname;
     
-    public ClienteUDP(int port) {
+    public ClienteUDP(String hostname, int port) {
         this.port = port;
+        this.hostname = hostname;
     }
     
     @Override
@@ -31,7 +33,7 @@ public class ClienteUDP implements iCliente {
         try{
             DatagramSocket clientUDP = new DatagramSocket();
             ByteArrayOutputStream outPutStream = new ByteArrayOutputStream();
-            InetAddress IPAddress = InetAddress.getByName("localhost");
+            InetAddress IPAddress = InetAddress.getByName(hostname);
             ObjectOutputStream os = new ObjectOutputStream(outPutStream);
             os.writeObject(req);
             byte[] data = outPutStream.toByteArray();
@@ -41,7 +43,7 @@ public class ClienteUDP implements iCliente {
             byte[] incomingData = new byte[1024];
             DatagramPacket incomingPacket = new DatagramPacket(incomingData, incomingData.length);
             clientUDP.receive(incomingPacket);
-            response = String.valueOf(incomingPacket.getData());
+            response = new String(incomingPacket.getData());
             
         } catch (Exception e) {
             e.printStackTrace();
